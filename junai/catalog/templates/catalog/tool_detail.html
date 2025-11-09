@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<main class="detail">
+	<h1>Model: {{ tool.name }}</h1>
+
+	{% if tool.discription %}
+	<p>{{ tool.description }}</p>
+	{% else %}
+	<p>No description available for this tool.</p>
+	{% endif %}
+	
+  <section class="card glass" style="margin-top:1rem;">
+    <h2 class="panel-title">질문하기</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn">질문 보내기</button>
+    </form>
+  </section>
+
+  {% if question %}
+  <section class="card glass" style="margin-top:1rem;">
+    <h3>질문</h3>
+    <div class="mono">{{ question|linebreaksbr }}</div>
+    <h3 style="margin-top:.8rem;">답변</h3>
+    <div class="answer">{{ answer|linebreaksbr }}</div>
+  </section>
+  {% endif %}
+</main>
+{% endblock %}

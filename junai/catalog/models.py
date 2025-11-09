@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class ToolList(models.Model):
@@ -7,6 +8,9 @@ class ToolList(models.Model):
 
 	def __str__(self):
 		return self.name
+	
+	def get_absolute_url(self):
+		return reverse('tool-detail', args=[str(self.pk)])
 
 class AnalysisModel(models.Model):
 	name = models.CharField(max_length=200)

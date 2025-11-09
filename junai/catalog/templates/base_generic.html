@@ -1,28 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
-  {% block title %}<title>Local Library</title>{% endblock %}
+  {% block title %}<title>JunAI</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <!-- Add additional CSS in static file -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-2">
-      {% block sidebar %}
-        <ul class="sidebar-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="">All books</a></li>
-          <li><a href="">All authors</a></li>
-        </ul>
-     {% endblock %}
-      </div>
-      <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
-    </div>
-  </div>
+  <header class="site-header">
+		<!-- 로고 -->
+		<svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+			<defs>
+			<linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+				<stop offset="0" />
+				<stop offset="1" />
+			</linearGradient>
+			</defs>
+			<rect x="2" y="2" width="44" height="44" rx="10" class="logo-bg"/>
+			<path d="M32 13v11.5c0 6.2-3.7 10-10 10-2.7 0-5-.7-7-2l2.5-4.4c1.5 1 3 1.5 4.5 1.5 3 0 4.5-1.7 4.5-5.2V13h5.5z"class="logo-j"/>
+		</svg>
+		<span class="brand-text">JunAI</span>
+	</a>
+	<nav class="nav">
+		<a href="{% url 'index' %}" class="nav-link">Home</a>
+
+		<a href="{% url 'tools' %}" class="nav-link btn-ghost">OpenAI 분석 페이지</a>
+	</nav>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="site-footer">
+	<small>© {{ now|date:"Y" }} JunAI</small>
+  </footer>
 </body>
 </html>
