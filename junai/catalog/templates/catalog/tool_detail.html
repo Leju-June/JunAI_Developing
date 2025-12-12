@@ -2,29 +2,54 @@
 
 {% block content %}
 <main class="detail">
-	<h1>Model: {{ tool.name }}</h1>
+  <h1>Model: {{ tool.name }}</h1>
 
-	{% if tool.discription %}
-	<p>{{ tool.description }}</p>
-	{% else %}
-	<p>No description available for this tool.</p>
-	{% endif %}
-	
+  {% if tool.description %}
+    <p>{{ tool.description }}</p>
+  {% else %}
+    <p>No description available for this tool.</p>
+  {% endif %}
+
   <section class="card glass" style="margin-top:1rem;">
-    <h2 class="panel-title">질문하기</h2>
-    <form method="post">
+    <h2 class="panel-title">CSV 업로드로 LDA 실행</h2>
+
+    <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit" class="btn">질문 보내기</button>
+      <button type="submit" class="btn">LDA 실행</button>
     </form>
+
+    <div class="mono" style="margin-top:.6rem;">
+      업로드 CSV 형식:
+      (1) header 없는 토큰 리스트 CSV(행=문서, 셀=토큰) 또는
+      (2) 'tokens' 컬럼이 있는 CSV(공백으로 구분된 토큰 문자열)
+    </div>
   </section>
 
-  {% if question %}
+  {% if answer %}
   <section class="card glass" style="margin-top:1rem;">
-    <h3>질문</h3>
-    <div class="mono">{{ question|linebreaksbr }}</div>
-    <h3 style="margin-top:.8rem;">답변</h3>
+    <h3>분석 요약</h3>
     <div class="answer">{{ answer|linebreaksbr }}</div>
+
+    {% if images %}
+      <h3 style="margin-top:1rem;">그래프</h3>
+      {% for img in images %}
+        <div style="margin:.8rem 0;">
+          <img src="{{ MEDIA_URL }}{{ img }}" alt="{{ img }}"
+               style="max-width:100%; border-radius:12px;" />
+          <div class="mono" style="margin-top:.35rem;">{{ img }}</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% if files %}
+      <h3 style="margin-top:1rem;">결과 파일</h3>
+      <ul>
+        {% for f in files %}
+          <li class="mono"><a href="{{ MEDIA_URL }}{{ f }}" download>{{ f }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
   </section>
   {% endif %}
 </main>
